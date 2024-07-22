@@ -1,0 +1,15 @@
+설계 시간: 13:43 ~ 13:53
+코딩 시간: 13:53 ~ 14:40
+
+변수
+int previous <= 직전에 N극이었는지, S극이었는지 저장
+int[][] table
+int tmpCnt <= 임시변수, 3이 되면 교착상태 추가
+int staleCnt <= 교착 상태 카운트
+
+
+열 별로 세기
+1. N극이 처음 나오면 tmpCnt+1
+2. S극이고 tmpCnt 1일 때 tmpCnt+1
+3-1. N극이 다시 처음 나오면 tmpCnt 1로 저장, staleCnt+1
+3-2. tmpCnt 2이고 previous가 S극인 상태로 끝났다면 staleCnt+1
