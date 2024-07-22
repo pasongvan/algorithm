@@ -1,0 +1,24 @@
+설계시간: 16:46 ~ 16:58
+코딩시간: 16:58 ~ 실패(시간초과)
+
+최댓값 찾고 최댓값과 인덱스기억
+최댓값까지 반복문으로 그 앞 시세차익 다 더함
+
+그 뒤 다시 최댓값 찾고..
+
+int[] price 입력
+
+int startIndex = 0
+int maxPrice = 0
+int maxIndex = 0
+int profit = 0
+
+while(startIndex<days)
+	for (int i=startIndex; i<days; i++)
+		if (maxPrice <= price[i])
+			maxPrice = price[i]
+			maxIndex = i
+	for (int i=startIndex; i<maxIndex; i++)
+		profit += (maxPrice - price[i])
+	startIndex = maxIndex + 1
+		
