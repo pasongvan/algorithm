@@ -1,0 +1,12 @@
+설계시간: 15:17 ~ 15:32
+코딩시간: 15:32 ~ 15:41
+
+int velocity
+int distance
+
+1이면 velocity += 뒤에 값
+2이면 velocity -= 뒤에 값
+
+if velocity<0 => velocity=0
+
+distance += velocity
