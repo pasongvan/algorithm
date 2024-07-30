@@ -14,8 +14,6 @@ public class Main {
 		int partArea = 0;
 		boolean shape = false; // true는 ㅁ모양, false는 ㄱ모양
 		int[] countDirection = new int[5]; // 각 방향이 몇번 나왔는지 담는 변수
-		int partDistance1 = 0;
-		int partDistance2 = 0;
 		
 		// 양 끝은 비워둠
 		for (int i=1; i<7; i++) {
@@ -46,6 +44,8 @@ public class Main {
 		// ㄱ모양 밭인 경우===========================================
 		int partDir1 = 0; // 부분 사각형 한 변의 길이
 		int partDir2 = 0; // 부분 사각형 다른 한 변의 길이
+		int partDistance1 = 0;
+		int partDistance2 = 0;
 		int tmp = 0; // 두 변을 구분하기 위한 임시변수
 		if (shape == false) {
 			// 면적 제외할 사각형의 두 방향 체크
@@ -65,10 +65,16 @@ public class Main {
 					if ((border[i-1][0]==0 || border[i-1][0]==partDir2) && (border[i+1][0]==0 || border[i+1][0]==partDir2)) {
 						partDistance1 = border[i][1];
 					}
+					if ((border[i-1][0]==partDir2) && (border[i+1][0]==partDir2)) {
+						partDistance1 = border[i][1];
+					}
 				}
 				// direction2
 				else if (border[i][0] == partDir2) {
 					if ((border[i-1][0]==0 || border[i-1][0]==partDir1) && (border[i+1][0]==0 || border[i+1][0]==partDir1)) {
+						partDistance2 = border[i][1];
+					}
+					if ((border[i-1][0]==partDir1) && (border[i+1][0]==partDir1)) {
 						partDistance2 = border[i][1];
 					}
 				}
