@@ -1,5 +1,6 @@
 package boj_1743_음식물;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -24,28 +25,30 @@ public class Main {
 		for (int row=1; row<=N; row++) {
 			for (int col=1; col<=M; col++) {
 				// 내 칸에 음식물이 있을 때
-				if (floor[row][col] > 0) {
-					
-					// 위, 왼쪽, 위왼쪽에 모두 음식물이 있으면 (내 칸) - (왼쪽 위)
-					if (floor[row-1][col]>0 && floor[row][col-1]>0 && floor[row-1][col-1]>0)
-						floor[row][col] -= floor[row-1][col-1];
+				if (floor[row][col] != 0) {
 					
 					// 최댓값 갱신
 					if (max < floor[row][col])
 						max = floor[row][col];
 					
 					// 오른쪽이나 아래쪽에 음식물이 있는 경우
-					if (floor[row][col+1]>0 || floor[row+1][col]>0) {
+					if (floor[row][col+1]!=0 || floor[row+1][col]!=0) {
 						//나, 오른쪽, 아래쪽 다 더한 값을
 						int sum = floor[row][col] + floor[row][col+1] + floor[row+1][col];
+						// 나에 저장
+						floor[row][col] = sum;
 						// 오른쪽에 저장
-						if (floor[row][col+1] > 0) {
+						if (floor[row][col+1] != 0) {
 							floor[row][col+1] = sum;
 						}
 						// 아래쪽에 저장
-						if (floor[row+1][col] > 0) {
+						if (floor[row+1][col] != 0) {
 							floor[row+1][col] = sum;
 						}
+						// 오른쪽, 아래쪽, 오른쪽 아래에 모두 음식물이 있을 때
+						if (floor[row][col+1]!=0 && floor[row+1][col]!=0 && floor[row+1][col+1]!=0)
+							// 오른쪽 밑 내거만큼 빼줌
+							floor[row+1][col+1] -= floor[row][col];
 					}
 				}
 			}
