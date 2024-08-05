@@ -1,58 +1,60 @@
 package boj_1743_음식물;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
+	
+	// static 변수
+	static boolean[][] floor; // 음식물 쓰레기 위치 이차원 배열
+	static boolean[][] visit; // 탐색했는지 표시하는 배열
+	static int[] dr = {0, 1, 0, -1}; // 행 방향 델타 배열
+	static int[] dc = {1, 0, -1, 0}; // 열 방향 델타 배열
+	static int idx = 0; // 델타 배열 인덱스
+	static int size;
+	static int max = 0; // 음식물 크기 최댓값
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		
-		// 변수 설정 및 입력==================================================
+		// 입력 값 받기
 		int N = sc.nextInt();
 		int M = sc.nextInt();
+		floor = new boolean[N][M];
+		visit = new boolean[N][M];
 		int K = sc.nextInt();
-		int max = 0;
-		int[][] floor = new int[N+2][M+2]; // 인덱스 범위 벗어나지 않도록 테두리 0
 		for (int i=0; i<K; i++) {
-			int row = sc.nextInt();
-			int col = sc.nextInt();
-			floor[row][col] = 1;
+			int row = sc.nextInt() - 1;
+			int col = sc.nextInt() - 1;
+			floor[row][col] = true;
 		}
 		
-		// 음식물 크기 계산==================================================
-		// 모든 칸 순회
-		for (int row=1; row<=N; row++) {
-			for (int col=1; col<=M; col++) {
-				// 내 칸에 음식물이 있을 때
-				if (floor[row][col] != 0) {
-					
-					// 최댓값 갱신
-					if (max < floor[row][col])
-						max = floor[row][col];
-					
-					// 오른쪽이나 아래쪽에 음식물이 있는 경우
-					if (floor[row][col+1]!=0 || floor[row+1][col]!=0) {
-						//나, 오른쪽, 아래쪽 다 더한 값을
-						int sum = floor[row][col] + floor[row][col+1] + floor[row+1][col];
-						// 나에 저장
-						floor[row][col] = sum;
-						// 오른쪽에 저장
-						if (floor[row][col+1] != 0) {
-							floor[row][col+1] = sum;
-						}
-						// 아래쪽에 저장
-						if (floor[row+1][col] != 0) {
-							floor[row+1][col] = sum;
-						}
-						// 오른쪽, 아래쪽, 오른쪽 아래에 모두 음식물이 있을 때
-						if (floor[row][col+1]!=0 && floor[row+1][col]!=0 && floor[row+1][col+1]!=0)
-							// 오른쪽 밑 내거만큼 빼줌
-							floor[row+1][col+1] -= floor[row][col];
-					}
+		// DFS 탐색
+		for (int row=0; row<N; row++) {
+			for (int col=0; col<M; col++) {
+				if (floor[row][col] && !visit[row][col]) {
+					size = 1;
+					dfs(row, col, N, M);
+					if (max < size)
+						max = size;
 				}
 			}
 		}
+		// 출력
 		System.out.println(max);
+	}
+	
+	// DFS 메소드
+	static void dfs(int row, int col, int N, int M) {
+		for (int i=0; i<4; i++) {
+			
+			row += dr[i];
+			col += dc[i];
+			
+			if (row>=0 && row<N && col>=0 && col<M && floor[row][col] && !visit[row][col]) {
+				size++;
+				dfs(row, col, N, M);
+				
+			}
+		}
 	}
 }
