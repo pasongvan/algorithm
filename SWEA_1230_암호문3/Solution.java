@@ -1,4 +1,4 @@
-package SWEA_1230_암호문3;
+package SWEA_1230_암호문3; 
 
 import java.util.LinkedList;
 import java.util.List;
