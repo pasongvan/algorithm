@@ -27,7 +27,14 @@ WHERE gender = "W"
 AND month(date_of_birth) = 3
 AND tlno IS NOT NULL;
 
-
+# 조건에 부합하는 중고거래 댓글 조회하기
+SELECT b.title, b.board_id, r.reply_id, r.writer_id, r.contents, date_format(r.created_date, "%Y-%m-%d") created_date
+FROM used_goods_board b
+INNER JOIN used_goods_reply r
+ON b.board_id = r.board_id
+WHERE year(b.created_date) = 2022
+AND month(b.created_date) = 10
+ORDER BY r.created_date, b.title;
 
 
 
