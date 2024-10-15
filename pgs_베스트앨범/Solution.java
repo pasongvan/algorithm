@@ -1,11 +1,7 @@
 import java.util.*;
 
-public class Solution {
-
-	public static void main(String[] args) {
-		
-		String[] genres = {"classic", "pop", "classic", "classic", "pop"};
-		int[] plays = {500, 600, 150, 800, 2500};
+class Solution {
+    public Object[] solution(String[] genres, int[] plays) {
 		
 		int N = genres.length;
 		
@@ -42,14 +38,21 @@ public class Solution {
 			map2.get(genre).add(tmp);
 		}
 		
+		for (String genre : map2.keySet()) {
+			Collections.sort(map2.get(genre), (a,b) -> a[0] - b[0]);
+			Collections.sort(map2.get(genre), (a,b) -> b[1] - a[1]);
+		}
+		
 		List<Integer> result = new ArrayList<>();
 		
 		for (int i=0; i<list.size(); i++) {
 			String genre = (String) list.get(i)[0];
 			for (int j=0; j<2; j++) {
 				if (map2.get(genre).size()==1 && j==1) continue;
-				result.add(map2.get(genre).get(i)[0]);
+				result.add(map2.get(genre).get(j)[0]);
 			}
 		}
+		
+		return result.toArray();
 	}
 }
